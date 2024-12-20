@@ -11,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.flow.spring.data.filter.Filter;
@@ -18,6 +19,7 @@ import com.vaadin.flow.spring.data.filter.PropertyStringFilter;
 import com.vaadin.flow.spring.data.filter.PropertyStringFilter.Matcher;
 
 @Route("filter")
+@Menu(title = "Grid with filter")
 public class GridWithFilter extends VerticalLayout {
 
     private Filter filter = null;
