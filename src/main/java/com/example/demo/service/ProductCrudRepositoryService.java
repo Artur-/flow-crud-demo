@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.service;
 
 import org.springframework.stereotype.Service;
 
@@ -9,8 +9,8 @@ import com.vaadin.hilla.BrowserCallable;
 @Service
 @BrowserCallable
 @AnonymousAllowed
-public class ProductService extends CrudRepositoryService<Product, Long, ProductRepository> {
-    public ProductService(ProductRepository repository) {
+public class ProductCrudRepositoryService extends CrudRepositoryService<Product, Long, ProductRepository> {
+    public ProductCrudRepositoryService(ProductRepository repository) {
         super(repository);
     }
 
