@@ -129,6 +129,11 @@
                 <artifactId>vaadin-grid-flow</artifactId>
                 <version>24.7-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-combo-box-flow</artifactId>
+                <version>24.7-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

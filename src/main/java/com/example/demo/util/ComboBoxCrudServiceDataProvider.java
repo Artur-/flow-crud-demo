@@ -15,7 +15,7 @@ import com.vaadin.flow.spring.data.filter.PropertyStringFilter;
 
 public class ComboBoxCrudServiceDataProvider<T> extends AbstractBackEndDataProvider<T, String> {
 
-    private static Function<String, Filter> createPropertyFilter(String comboboxFilterProperty) {
+     static Function<String, Filter> createPropertyFilter(String comboboxFilterProperty) {
         return filterString -> {
             PropertyStringFilter filter = new PropertyStringFilter();
             filter.setPropertyId(comboboxFilterProperty);
