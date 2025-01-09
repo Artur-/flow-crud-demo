@@ -15,11 +15,9 @@ public class GridEager extends VerticalLayout {
 
     public GridEager(CustomService customService) {
 
-        GridServiceDataProvider<Product> dataProvider = new GridServiceDataProvider<>(
-                () -> customService.findAllEager());
         Grid<Product> grid = new Grid<>(Product.class, false);
         grid.addColumns("name", "description", "price", "stockQuantity");
-        grid.setItems(dataProvider);
+        grid.setItems(customService.findAllEager());
         add(grid);
     }
 }

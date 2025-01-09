@@ -19,11 +19,9 @@ import com.vaadin.flow.spring.data.filter.PropertyStringFilter;
 public class GridEagerWithGenericFilter extends VerticalLayout {
 
     private PropertyStringFilter filter;
+    private Grid<Product> grid = new Grid<>(Product.class, false);
 
     public GridEagerWithGenericFilter(CustomService customService, EntityManager em) {
-
-        GridServiceDataProvider<Product> dataProvider = new GridServiceDataProvider<>(
-                () -> customService.findAllEager(filter));
 
         GenericFilterComponent filterComponent = new GenericFilterComponent(em, Product.class);
         filterComponent.addFilterChangeListener(e -> {
@@ -31,12 +29,11 @@ public class GridEagerWithGenericFilter extends VerticalLayout {
         });
         add(filterComponent);
         add(new Button("Update", e -> {
-            dataProvider.refreshAll();
+            grid.setItems(customService.findAllEager(filter));
         }));
 
-        Grid<Product> grid = new Grid<>(Product.class, false);
         grid.addColumns("name", "description", "price", "stockQuantity");
-        grid.setItems(dataProvider);
+        grid.setItems(customService.findAllEager(filter));
         add(grid);
     }
 }

@@ -15,12 +15,10 @@ import com.vaadin.flow.router.Route;
 @Menu(title = "Custom service, lazy, count method, filter")
 public class GridLazyWithCountWithFilter extends VerticalLayout {
 
-    private String nameOrDescription;
+    private String nameOrDescription = "";
+    private Grid<Product> grid;
 
     public GridLazyWithCountWithFilter(CustomService customService) {
-
-        GridServiceDataProvider<Product> dataProvider = new GridServiceDataProvider<>(
-                pageable -> customService.findProductsLazy(pageable, nameOrDescription), () -> customService.count());
 
         TextField filterField = new TextField("Name or description");
         filterField.addValueChangeListener(e -> {
@@ -28,12 +26,13 @@ public class GridLazyWithCountWithFilter extends VerticalLayout {
         });
         add(filterField);
         add(new Button("Update", e -> {
-            dataProvider.refreshAll();
+            grid.getDataProvider().refreshAll();
         }));
 
-        Grid<Product> grid = new Grid<>(Product.class, false);
+        grid = new Grid<>(Product.class, false);
         grid.addColumns("name", "description", "price", "stockQuantity");
-        grid.setItems(dataProvider);
+        grid.setItemsPageable(pageable -> customService.findProductsLazy(pageable, nameOrDescription),
+                pageable -> customService.count(nameOrDescription));
         add(grid);
     }
 

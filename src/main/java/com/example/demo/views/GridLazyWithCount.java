@@ -15,12 +15,9 @@ public class GridLazyWithCount extends VerticalLayout {
 
     public GridLazyWithCount(CustomService customService) {
 
-        GridServiceDataProvider<Product> dataProvider = new GridServiceDataProvider<>(
-                pageable -> customService.findProductsLazy(pageable), () -> customService.count());
-
         Grid<Product> grid = new Grid<>(Product.class, false);
         grid.addColumns("name", "description", "price", "stockQuantity");
-        grid.setItems(dataProvider);
+        grid.setItemsPageable(pageable -> customService.findProductsLazy(pageable), pageable -> customService.count());
         add(grid);
     }
 

@@ -15,12 +15,9 @@ public class GridLazy extends VerticalLayout {
 
     public GridLazy(CustomService customService) {
 
-        GridServiceDataProvider<Product> dataProvider = new GridServiceDataProvider<>(
-                pageable -> customService.findProductsLazy(pageable));
-
         Grid<Product> grid = new Grid<>(Product.class, false);
         grid.addColumns("name", "description", "price", "stockQuantity");
-        grid.setItems(dataProvider);
+        grid.setItemsPageable(pageable -> customService.findProductsLazy(pageable));
         add(grid);
     }
 

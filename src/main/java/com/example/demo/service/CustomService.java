@@ -48,6 +48,9 @@ public class CustomService {
         return repository.count();
     }
 
+    public long count(String nameOrDescription) {
+        return count(createNameOrDescriptionFilter(nameOrDescription));
+    }
     public long count(Filter filter) {
         return repository.count(JpaFilterConverter.toSpec(filter, Product.class));
     }

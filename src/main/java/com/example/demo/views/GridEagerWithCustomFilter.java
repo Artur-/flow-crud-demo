@@ -17,12 +17,10 @@ import com.vaadin.flow.router.Route;
 @Menu(title = "Grid with eager loading and custom filtering")
 public class GridEagerWithCustomFilter extends VerticalLayout {
 
-    private String nameOrDescription = null;
+    private String nameOrDescription = "";
+    private Grid<Product> grid;
 
     public GridEagerWithCustomFilter(CustomService customService, EntityManager em) {
-
-        GridServiceDataProvider<Product> dataProvider = new GridServiceDataProvider<>(
-                () -> customService.findAllEager(nameOrDescription));
 
         TextField filterField = new TextField("Name or description");
         filterField.addValueChangeListener(e -> {
@@ -30,12 +28,12 @@ public class GridEagerWithCustomFilter extends VerticalLayout {
         });
         add(filterField);
         add(new Button("Update", e -> {
-            dataProvider.refreshAll();
+            grid.setItems(customService.findAllEager(nameOrDescription));
         }));
 
-        Grid<Product> grid = new Grid<>(Product.class, false);
+        grid = new Grid<>(Product.class, false);
         grid.addColumns("name", "description", "price", "stockQuantity");
-        grid.setItems(dataProvider);
+        grid.setItems(customService.findAllEager(nameOrDescription));
         add(grid);
     }
 }

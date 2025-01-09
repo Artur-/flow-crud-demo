@@ -9,12 +9,12 @@ import com.vaadin.flow.spring.data.ListService;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.flow.spring.data.filter.Filter;
 
-public class GridCrudServiceDataProvider<T> extends AbstractBackEndDataProvider<T, Void> {
+public class GridListServiceDataProvider<T> extends AbstractBackEndDataProvider<T, Void> {
 
     private final ListService<T> service;
     private Filter filter;
 
-    public GridCrudServiceDataProvider(ListService<T> service) {
+    public GridListServiceDataProvider(ListService<T> service) {
         this.service = service;
     }
 

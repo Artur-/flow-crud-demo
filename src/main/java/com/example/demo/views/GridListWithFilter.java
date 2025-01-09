@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 import com.example.demo.GenericFilterComponent;
 import com.example.demo.service.Product;
 import com.example.demo.service.ProductCrudRepositoryService;
-import com.example.demo.util.GridCrudServiceDataProvider;
+import com.example.demo.util.GridListServiceDataProvider;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -16,26 +16,25 @@ import com.vaadin.flow.spring.data.filter.PropertyStringFilter;
 
 @Route
 @Menu(title = "Crud Service, generic filter")
-public class GridCrudWithFilter extends VerticalLayout {
+public class GridListWithFilter extends VerticalLayout {
 
     private PropertyStringFilter filter;
+    private Grid<Product> grid;
 
-    public GridCrudWithFilter(ProductCrudRepositoryService productService,
+    public GridListWithFilter(ProductCrudRepositoryService productService,
             EntityManager em) {
-        GridCrudServiceDataProvider<Product> dataProvider = new GridCrudServiceDataProvider<>(productService);
-
         GenericFilterComponent filterComponent = new GenericFilterComponent(em, Product.class);
         filterComponent.addFilterChangeListener(e -> {
             this.filter = e.getPropertyFilter();
-            
         });
         add(filterComponent);
         add(new Button("Update", e -> {
-            dataProvider.setFilter(filter);
+            grid.getDataProvider().refreshAll();
         }));
 
-        Grid<Product> grid = new Grid<>(Product.class, false);
-        grid.setItems(dataProvider);
+        grid = new Grid<>(Product.class, false);
+        grid.setItemsPageable(pageable -> productService.list(pageable, filter),
+                pageable -> productService.count(filter));
         grid.addColumns("id", "name", "description", "price", "stockQuantity");
         add(grid);
     }

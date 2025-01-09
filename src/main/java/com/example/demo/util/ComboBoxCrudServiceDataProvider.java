@@ -15,18 +15,22 @@ import com.vaadin.flow.spring.data.filter.PropertyStringFilter;
 
 public class ComboBoxCrudServiceDataProvider<T> extends AbstractBackEndDataProvider<T, String> {
 
-    private final ListService<T> service;
-    private Filter filter;
-    private Function<String, Filter> filterConverter;
-
-    public ComboBoxCrudServiceDataProvider(ListService<T> service, String comboboxFilterProperty) {
-        this(service, filterString -> {
+    private static Function<String, Filter> createPropertyFilter(String comboboxFilterProperty) {
+        return filterString -> {
             PropertyStringFilter filter = new PropertyStringFilter();
             filter.setPropertyId(comboboxFilterProperty);
             filter.setFilterValue(filterString);
             filter.setMatcher(PropertyStringFilter.Matcher.CONTAINS);
             return filter;
-        });
+        };
+    }
+
+    private final ListService<T> service;
+    private Filter filter;
+    private Function<String, Filter> filterConverter;
+
+    public ComboBoxCrudServiceDataProvider(ListService<T> service, String comboboxFilterProperty) {
+        this(service, createPropertyFilter(comboboxFilterProperty));
     }
 
     public ComboBoxCrudServiceDataProvider(ListService<T> service, Function<String, Filter> filterConverter) {
