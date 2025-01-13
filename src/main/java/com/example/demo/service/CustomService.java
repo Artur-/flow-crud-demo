@@ -11,6 +11,7 @@ import com.vaadin.flow.spring.data.filter.OrFilter;
 import com.vaadin.flow.spring.data.filter.PropertyStringFilter;
 import com.vaadin.flow.spring.data.filter.PropertyStringFilter.Matcher;
 import com.vaadin.flow.spring.data.jpa.JpaFilterConverter;
+import com.vaadin.flow.spring.data.jpa.PropertyStringFilterSpecification;
 
 @Service
 public class CustomService {
@@ -27,7 +28,7 @@ public class CustomService {
 
     public List<Product> findProductsLazy(Pageable pageable, String nameOrDescription) {
         Specification<Product> spec = JpaFilterConverter.toSpec(createNameOrDescriptionFilter(nameOrDescription),
-                Product.class);
+                Product.class, PropertyStringFilterSpecification::new);
         return repository.findAll(spec, pageable).toList();
     }
 
@@ -36,12 +37,14 @@ public class CustomService {
     }
 
     public List<Product> findAllEager(Filter filter) {
-        return repository.findAll(JpaFilterConverter.toSpec(filter, Product.class));
+        return repository
+                .findAll(JpaFilterConverter.toSpec(filter, Product.class, PropertyStringFilterSpecification::new));
     }
 
     public List<Product> findAllEager(String nameOrDescription) {
         return repository
-                .findAll(JpaFilterConverter.toSpec(createNameOrDescriptionFilter(nameOrDescription), Product.class));
+                .findAll(JpaFilterConverter.toSpec(createNameOrDescriptionFilter(nameOrDescription), Product.class,
+                        PropertyStringFilterSpecification::new));
     }
 
     public long count() {
@@ -51,25 +54,19 @@ public class CustomService {
     public long count(String nameOrDescription) {
         return count(createNameOrDescriptionFilter(nameOrDescription));
     }
+
     public long count(Filter filter) {
-        return repository.count(JpaFilterConverter.toSpec(filter, Product.class));
+        return repository
+                .count(JpaFilterConverter.toSpec(filter, Product.class, PropertyStringFilterSpecification::new));
     }
 
     private Filter createNameOrDescriptionFilter(String nameOrDescription) {
-        PropertyStringFilter nameFilter = new PropertyStringFilter();
-        nameFilter.setPropertyId("name");
-        nameFilter.setMatcher(Matcher.CONTAINS);
-        nameFilter.setFilterValue(nameOrDescription);
+        PropertyStringFilter nameFilter = new PropertyStringFilter("name", Matcher.CONTAINS, nameOrDescription);
 
-        PropertyStringFilter descriptionFilter = new PropertyStringFilter();
-        descriptionFilter.setPropertyId("description");
-        descriptionFilter.setMatcher(Matcher.CONTAINS);
-        descriptionFilter.setFilterValue(nameOrDescription);
+        PropertyStringFilter descriptionFilter = new PropertyStringFilter("description", Matcher.CONTAINS,
+                nameOrDescription);
 
-        OrFilter filter = new OrFilter();
-        filter.setChildren(List.of(nameFilter, descriptionFilter));
-
-        return filter;
+        return new OrFilter(nameFilter, descriptionFilter);
     }
 
 }

@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 
 import com.example.demo.service.CustomService;
 import com.example.demo.service.Product;
-import com.example.demo.util.GridServiceDataProvider;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;

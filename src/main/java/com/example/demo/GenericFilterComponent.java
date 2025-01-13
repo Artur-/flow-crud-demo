@@ -41,12 +41,8 @@ public class GenericFilterComponent extends VerticalLayout {
     }
 
     private void updateFilter(ComponentEvent<?> event) {
-        PropertyStringFilter propertyFilter = new PropertyStringFilter();
-        propertyFilter.setPropertyId(filterPropertySelect.getValue());
-        propertyFilter.setFilterValue(filterField.getValue());
-        propertyFilter.setMatcher(matcherSelect.getValue());
-
-        this.filter = propertyFilter;
+        this.filter = new PropertyStringFilter(filterPropertySelect.getValue(),
+                matcherSelect.getValue(), filterField.getValue());
         this.getEventBus().fireEvent(new FilterChangeEvent(this, filter));
     }
 

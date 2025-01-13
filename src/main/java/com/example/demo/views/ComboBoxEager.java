@@ -2,7 +2,6 @@ package com.example.demo.views;
 
 import com.example.demo.service.CustomService;
 import com.example.demo.service.Product;
-import com.example.demo.util.ComboBoxServiceDataProvider;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;

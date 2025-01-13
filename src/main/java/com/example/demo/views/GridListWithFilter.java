@@ -5,7 +5,6 @@ import jakarta.persistence.EntityManager;
 import com.example.demo.GenericFilterComponent;
 import com.example.demo.service.Product;
 import com.example.demo.service.ProductCrudRepositoryService;
-import com.example.demo.util.GridListServiceDataProvider;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;

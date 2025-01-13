@@ -2,7 +2,6 @@ package com.example.demo.views;
 
 import com.example.demo.service.CustomService;
 import com.example.demo.service.Product;
-import com.example.demo.util.GridServiceDataProvider;
 
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;

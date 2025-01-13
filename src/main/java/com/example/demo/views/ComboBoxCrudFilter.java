@@ -1,7 +1,5 @@
 package com.example.demo.views;
 
-import java.util.List;
-
 import com.example.demo.service.Product;
 import com.example.demo.service.ProductCrudRepositoryService;
 import org.jspecify.annotations.Nullable;
@@ -32,20 +30,10 @@ public class ComboBoxCrudFilter extends VerticalLayout {
     }
 
     private @Nullable Filter createFilter(String comboboxFilterString) {
-        PropertyStringFilter containsAc = new PropertyStringFilter();
-        containsAc.setPropertyId("name");
-        containsAc.setFilterValue("ac");
-        containsAc.setMatcher(Matcher.CONTAINS);
+        PropertyStringFilter containsAc = new PropertyStringFilter("name", Matcher.CONTAINS, "ac");
 
-        PropertyStringFilter filter = new PropertyStringFilter();
-        filter.setPropertyId("name");
-        filter.setFilterValue(comboboxFilterString);
-        filter.setMatcher(PropertyStringFilter.Matcher.CONTAINS);
+        PropertyStringFilter filter = new PropertyStringFilter("name", Matcher.CONTAINS, comboboxFilterString);
 
-        AndFilter and = new AndFilter();
-        and.setChildren(List.of(containsAc, filter));
-
-        return and;
-
+        return new AndFilter(containsAc, filter);
     }
 }

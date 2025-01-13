@@ -25,11 +25,6 @@ public class ComboBoxCrud extends VerticalLayout {
     }
 
     private @Nullable Filter createFilter(String comboboxFilterString) {
-        PropertyStringFilter filter = new PropertyStringFilter();
-        filter.setPropertyId("name");
-        filter.setFilterValue(comboboxFilterString);
-        filter.setMatcher(PropertyStringFilter.Matcher.CONTAINS);
-        return filter;
-
+        return new PropertyStringFilter("name", PropertyStringFilter.Matcher.CONTAINS, comboboxFilterString);
     }
 }
